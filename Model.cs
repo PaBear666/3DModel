@@ -19,12 +19,12 @@ namespace _3DModel
 
         private double a = -Math.PI / 2;
         private double b = Math.PI / 2;
-        private int ky = 0;
-        private int kx = 0;
+        private int dy = 0;
+        private int dx = 0;
 
         public Model(Color color, PictureBox picture, int size = 90)
         {
-            Color = color;
+            this.Color = color;
             Picture = picture;
             Size = size;
             pen = new Pen(color, 1);
@@ -62,8 +62,8 @@ namespace _3DModel
             int x = Picture.Width / 2;
             int y = Picture.Height / 2;
 
-            int X = (int)(x + point3D.x + kx);
-            int Y = (int)(y + point3D.y + ky);
+            int X = (int)(x + point3D.x) + dx;
+            int Y = (int)(y + point3D.y) + dy;
             return new Point(X, Y);
         }
         #endregion
@@ -151,21 +151,23 @@ namespace _3DModel
             switch (button)
             {
                 case "up":
-                    ky -= 2;
+                    dy -= 2;
                     break;
                 case "down":
-                    ky += 2;
+                    dy += 2;
                     break;
                 case "left":
-                    kx -= 2;
+                    dx -= 2;
                     break;
                 case "right":
-                    kx += 2;
+                    dx += 2;
                     break;
 
             }
             Picture.Refresh();
             g.Clear(Color.Black);
+            FillWorldCoor();
+            FillAxCoor();
             FillScreenCoor();
             Draw();
         }
